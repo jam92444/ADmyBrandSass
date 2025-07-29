@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import {
   Eye,
   EyeOff,
@@ -19,6 +21,7 @@ import Link from "next/link";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { TRIAL_DURATION_DAYS } from "@/lib/trial-utils";
 
 // Validation schema
 const signupSchema = z
@@ -61,6 +64,8 @@ type SignupForm = z.infer<typeof signupSchema>;
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const {
     register,
@@ -84,13 +89,48 @@ export default function SignupPage() {
   const onSubmit = async (data: SignupForm) => {
     try {
       setIsLoading(true);
-      // Add your signup logic here
-      console.log("Form data:", data);
-      // Example API call:
-      // await api.auth.signup(data);
-    } catch (error) {
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...data,
+          trialStarted: new Date(),
+          trialEnds: new Date(
+            Date.now() + TRIAL_DURATION_DAYS * 24 * 60 * 60 * 1000
+          ),
+          isTrialUsed: false,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to sign up");
+      }
+
+      // Sign in the user after successful signup
+      const result = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        throw new Error(result.error);
+      }
+
+      // Redirect to dashboard
+      router.push("/dashboard");
+    } catch (error: any) {
       console.error("Signup error:", error);
-      // Handle error (show toast, etc.)
+      if (error instanceof Error) {
+        setError(error.message);
+      } else if (typeof error === "object" && error?.message) {
+        setError(error.message);
+      } else {
+        setError("An error occurred during signup");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -115,6 +155,19 @@ export default function SignupPage() {
         {/* Signup Form */}
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-xl">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {/* Trial Info Banner */}
+            <div className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-lg p-4">
+              <h3 className="text-lg font-semibold text-white mb-2 flex items-center">
+                <Check className="w-5 h-5 mr-2 text-green-400" />
+                Free Trial Included
+              </h3>
+              <p className="text-gray-300 text-sm">
+                Start your {TRIAL_DURATION_DAYS}-day free trial today. No credit
+                card required. Full access to all features during the trial
+                period.
+              </p>
+            </div>
+
             {/* Name Field */}
             <div className="space-y-2">
               <Label htmlFor="name" className="text-white">
@@ -271,6 +324,17 @@ export default function SignupPage() {
               <p className="text-red-500 text-sm mt-1">
                 {errors.terms.message}
               </p>
+            )}
+
+            {/* Error Message */}
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-red-400 text-sm text-center bg-red-500/10 p-2 rounded-lg"
+              >
+                {error}
+              </motion.div>
             )}
 
             {/* Submit Button */}
