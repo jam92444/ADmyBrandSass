@@ -2,6 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --font-sans: var(--geist-font);
+  --font-mono: var(--geist-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+* {
+  font-family: var(--font-sans);
+}
+
+/* For webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.5);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.7);
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

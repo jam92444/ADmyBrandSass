@@ -8,7 +8,16 @@ import { Badge } from "@/components/ui/badge"
 import { Switch } from "@/components/ui/switch"
 import { GlassCard } from "./glass-card"
 
-const plans = [
+type Plan = {
+  name: string
+  monthlyPrice: number
+  yearlyPrice: number
+  description: string
+  features: string[]
+  popular: boolean
+}
+
+const plans: Plan[] = [
   {
     name: "Starter",
     monthlyPrice: 29,
@@ -74,59 +83,59 @@ export function PricingCalculator() {
       {/* Pricing Cards */}
       <div className="grid md:grid-cols-3 gap-8">
         {plans.map((plan, index) => (
-          <motion.div
+            <motion.div
             key={plan.name}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.1 }}
-            className="relative"
-          >
+            className="relative z-20"
+            >
             {plan.popular && (
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <Badge className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1">
-                  <Zap className="w-4 h-4 mr-1" />
-                  Most Popular
-                </Badge>
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-30">
+              <Badge className="bg-gradient-to-r from-blue-600 to-purple-600 mb-6 text-white px-4 py-1 flex items-center">
+                <Zap className="w-4 h-4 mr-1" />
+                Most Popular
+              </Badge>
               </div>
             )}
 
-            <GlassCard className={`p-8 h-full ${plan.popular ? "ring-2 ring-blue-500/50" : ""}`}>
+            <GlassCard className={`p-8 h-full ${plan.popular ? "ring-2 ring-blue-500/50" : ""} relative z-10`}>
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
-                <p className="text-gray-300 mb-4">{plan.description}</p>
-                <div className="mb-4">
-                  <span className="text-4xl font-bold text-white">
-                    ${isYearly ? plan.yearlyPrice : plan.monthlyPrice}
-                  </span>
-                  <span className="text-gray-300">/{isYearly ? "year" : "month"}</span>
-                </div>
-                {isYearly && (
-                  <p className="text-sm text-green-400">Save ${plan.monthlyPrice * 12 - plan.yearlyPrice} annually</p>
-                )}
+              <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
+              <p className="text-gray-300 mb-4">{plan.description}</p>
+              <div className="mb-4">
+                <span className="text-4xl font-bold text-white">
+                ${isYearly ? plan.yearlyPrice : plan.monthlyPrice}
+                </span>
+                <span className="text-gray-300">/{isYearly ? "year" : "month"}</span>
+              </div>
+              {isYearly && (
+                <p className="text-sm text-green-400">Save ${plan.monthlyPrice * 12 - plan.yearlyPrice} annually</p>
+              )}
               </div>
 
               <ul className="space-y-4 mb-8">
-                {plan.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-start">
-                    <Check className="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">{feature}</span>
-                  </li>
-                ))}
+              {plan.features.map((feature, featureIndex) => (
+                <li key={featureIndex} className="flex items-start">
+                <Check className="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0" />
+                <span className="text-gray-300">{feature}</span>
+                </li>
+              ))}
               </ul>
 
               <Button
-                className={`w-full ${
-                  plan.popular
-                    ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                    : "bg-white/10 hover:bg-white/20 text-white"
-                }`}
-                size="lg"
+              className={`w-full ${
+                plan.popular
+                ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                : "bg-white/10 hover:bg-white/20 text-white"
+              }`}
+              size="lg"
               >
-                Get Started
+              Get Started
               </Button>
             </GlassCard>
-          </motion.div>
+            </motion.div>
         ))}
       </div>
     </div>

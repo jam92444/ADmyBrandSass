@@ -10,7 +10,7 @@ export function HeroVideo() {
   const [isPlaying, setIsPlaying] = useState(false)
 
   return (
-    <div className="relative">
+    <div className="relative mb-[4rem]">
       <GlassCard className="p-4">
         <div className="relative aspect-video bg-gradient-to-br from-blue-900/50 to-purple-900/50 rounded-lg overflow-hidden">
           {!isPlaying ? (
