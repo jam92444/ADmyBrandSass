@@ -58,12 +58,13 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-blue-600/10 via-purple-600/10 to-transparent pointer-events-none" />
       <Navigation />
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20"
+          className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-cyan-600/20"
           style={{ y }}
         />
 
@@ -130,13 +131,55 @@ export default function LandingPage() {
         {/* Floating Elements */}
         <motion.div
           className="absolute top-20 left-10 w-20 h-20 bg-blue-500/20 rounded-full blur-xl"
-          animate={{ y: [-20, 20, -20] }}
-          transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
+          animate={{
+            y: [-20, 20, -20],
+            scale: [1, 1.2, 1],
+            rotate: [0, 45, 0],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "easeInOut",
+          }}
         />
         <motion.div
           className="absolute bottom-20 right-10 w-32 h-32 bg-purple-500/20 rounded-full blur-xl"
-          animate={{ y: [20, -20, 20] }}
-          transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
+          animate={{
+            y: [20, -20, 20],
+            scale: [1.2, 1, 1.2],
+            rotate: [45, 0, 45],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute top-40 right-20 w-24 h-24 bg-cyan-500/20 rounded-full blur-xl"
+          animate={{
+            x: [-20, 20, -20],
+            scale: [1, 1.3, 1],
+            rotate: [-45, 0, -45],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute bottom-40 left-20 w-28 h-28 bg-pink-500/20 rounded-full blur-xl"
+          animate={{
+            x: [20, -20, 20],
+            scale: [1.1, 1, 1.1],
+            rotate: [30, -30, 30],
+          }}
+          transition={{
+            duration: 4.5,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "easeInOut",
+          }}
         />
       </section>
 
@@ -190,56 +233,70 @@ export default function LandingPage() {
             </p>
           </motion.div>
 
-          <motion.div
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            {[
-              {
-                icon: Zap,
-                title: "AI Content Generation",
-                description:
-                  "Create compelling ad copy, social media posts, and email campaigns in seconds with our advanced AI engine.",
-              },
-              {
-                icon: Target,
-                title: "Smart Audience Targeting",
-                description:
-                  "Identify and reach your ideal customers with precision using machine learning algorithms.",
-              },
-              {
-                icon: BarChart3,
-                title: "Performance Analytics",
-                description:
-                  "Get real-time insights and predictive analytics to optimize your campaigns for maximum ROI.",
-              },
-              {
-                icon: Users,
-                title: "Multi-Channel Management",
-                description:
-                  "Manage all your marketing channels from one unified dashboard with seamless integration.",
-              },
-              {
-                icon: Shield,
-                title: "Brand Safety",
-                description:
-                  "Protect your brand reputation with AI-powered content moderation and compliance checking.",
-              },
-              {
-                icon: Sparkles,
-                title: "Creative Optimization",
-                description:
-                  "Automatically test and optimize creative elements to improve engagement and conversions.",
-              },
-            ].map((feature, index) => (
-              <motion.div key={index} variants={fadeInUp}>
-                <FeatureCard {...feature} />
-              </motion.div>
-            ))}
-          </motion.div>
+          <div className="relative">
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-3xl"
+              animate={{
+                scale: [1, 1.1, 1],
+                opacity: [0.1, 0.2, 0.1],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+            <motion.div
+              className="relative grid md:grid-cols-2 lg:grid-cols-3 gap-8 p-4"
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+            >
+              {[
+                {
+                  icon: Zap,
+                  title: "AI Content Generation",
+                  description:
+                    "Create compelling ad copy, social media posts, and email campaigns in seconds with our advanced AI engine.",
+                },
+                {
+                  icon: Target,
+                  title: "Smart Audience Targeting",
+                  description:
+                    "Identify and reach your ideal customers with precision using machine learning algorithms.",
+                },
+                {
+                  icon: BarChart3,
+                  title: "Performance Analytics",
+                  description:
+                    "Get real-time insights and predictive analytics to optimize your campaigns for maximum ROI.",
+                },
+                {
+                  icon: Users,
+                  title: "Multi-Channel Management",
+                  description:
+                    "Manage all your marketing channels from one unified dashboard with seamless integration.",
+                },
+                {
+                  icon: Shield,
+                  title: "Brand Safety",
+                  description:
+                    "Protect your brand reputation with AI-powered content moderation and compliance checking.",
+                },
+                {
+                  icon: Sparkles,
+                  title: "Creative Optimization",
+                  description:
+                    "Automatically test and optimize creative elements to improve engagement and conversions.",
+                },
+              ].map((feature, index) => (
+                <motion.div key={index} variants={fadeInUp}>
+                  <FeatureCard {...feature} />
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -266,7 +323,7 @@ export default function LandingPage() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-32 relative overflow-hidden" id="testimonials"> 
+      <section className="py-32 relative overflow-hidden" id="testimonials">
         {isClient && (
           <>
             <motion.div
@@ -275,8 +332,42 @@ export default function LandingPage() {
               whileInView={{ opacity: 0.3 }}
               transition={{ duration: 1 }}
             >
-              <div className="absolute top-0 left-1/4 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl" />
-              <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl" />
+              <motion.div
+                className="absolute top-0 left-1/4 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [0.2, 0.3, 0.2],
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+              <motion.div
+                className="absolute bottom-0 right-1/4 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl"
+                animate={{
+                  scale: [1.2, 1, 1.2],
+                  opacity: [0.3, 0.2, 0.3],
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+              <motion.div
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"
+                animate={{
+                  scale: [1, 1.3, 1],
+                  opacity: [0.1, 0.2, 0.1],
+                }}
+                transition={{
+                  duration: 10,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
             </motion.div>
 
             <div className="container mx-auto px-4 relative">
