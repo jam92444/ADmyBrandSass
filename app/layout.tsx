@@ -1,63 +1,22 @@
-import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
-import { ErrorBoundary } from "@/components/error-boundary";
-import AuthProvider from "@/components/auth-provider";
-import "./globals.css";
+import type { Metadata } from 'next'
+import './globals.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://yourdomain.com"),
-  title: {
-    default: "ADmyBrand - AI Marketing Platform",
-    template: "%s | ADmyBrand",
-  },
-  description: "Transform your marketing with AI-powered solutions",
-  keywords: [
-    "AI Marketing",
-    "Digital Marketing",
-    "Marketing Automation",
-    "AI Platform",
-  ],
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://yourdomain.com",
-    siteName: "ADmyBrand",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "ADmyBrand - AI Marketing Platform",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    site: "@ADmyBrand",
-    creator: "@ADmyBrand",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+  title: 'ADmyBrand',
+  description: 'Best  Marketing  Tool',
+}
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{
+  children: React.ReactNode
+}>) {
   return (
-    <html
-      lang="en"
-      className={`${GeistSans.variable} ${GeistMono.variable} scroll-smooth`}
-    >
-      <body className="antialiased">
-        <ErrorBoundary>
-          <AuthProvider>{children}</AuthProvider>
-        </ErrorBoundary>
-      </body>
+    <html lang="en">
+      <head>
+
+      </head>
+      <body>{children}</body>
     </html>
-  );
+  )
 }
