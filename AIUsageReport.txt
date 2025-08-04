@@ -1,0 +1,14 @@
+AI Usage Report
+For this project, I extensively utilized Claude, an advanced AI assistant, to accelerate development and enhance code quality. Claude helped me by:
+
+Generating React components and Tailwind CSS classes to speed up UI development.
+
+Providing suggestions for improving the design and responsiveness of the landing page.
+
+Assisting with debugging and refining code for better maintainability.
+
+Offering ideas to improve the overall user experience and interface aesthetics.
+
+After receiving AI-generated code and design guidance, I made minor manual adjustments to tailor the UI elements and ensure a polished, cohesive look aligned with the project goals.
+
+Using Claude significantly reduced development time and helped me focus on building a beautiful, reusable component system with a modern SaaS landing page.
